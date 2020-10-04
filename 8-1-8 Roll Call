@@ -1,0 +1,46 @@
+#include <stdio.h>
+#define MAXN 20
+
+void CountOff( int n, int m, int out[] );
+
+int main()
+{
+    int out[MAXN], n, m;
+    int i;
+
+    scanf("%d %d", &n, &m);
+    CountOff( n, m, out );   
+    for ( i = 0; i < n; i++ )
+        printf("%d ", out[i]);
+    printf("\n");
+
+    return 0;
+}
+
+
+void CountOff( int n, int m, int out[] ){
+    int isout[n];
+    
+    for(int i = 0; i < n; i++){
+        isout[i] = 0;
+    }
+    
+    int count = n;
+    int i = 0;
+    while(count > 0){
+        
+        for(int iter = 0; iter < m; iter++){
+            while(isout[i]){
+                i = ( i + 1) % n;
+            }
+            //printf("%d: %d\n", iter + 1, i);
+            if(iter == m - 1) {
+            	count--;
+            	isout[i] = 1;
+            	out[i] = n - count;
+            	//printf("\n%d: number %d is out.\n", n - count, i);
+			}
+            i = (i + 1) % n;
+        }
+    }
+}
