@@ -13,10 +13,10 @@ int main()
 }
 
 int reverse( int number ){
+    int temp = number;
     int sum = 0;
     int first = 0;
     if(number < 0) {
-        printf("-");
         number = -number;
     }
     
@@ -33,5 +33,6 @@ int reverse( int number ){
         
         number /= 10;
     }
+    if(temp < 0) sum = -sum;
     return sum;
 }
