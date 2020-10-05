@@ -1,0 +1,56 @@
+#include <stdio.h>
+#define MAXN 10
+
+void f( long int x, char *p );
+
+int main()
+{
+    long int x;
+    char s[MAXN] = "";
+
+    scanf("%ld", &x);
+    f(x, s);
+    printf("%s\n", s);
+
+    return 0;
+}
+
+void f( long int x, char *p ){
+    if(x < 0){
+        *p = '-';
+        x = -x;
+        p++;
+    }
+    else if(x == 0){
+        *p = '0';
+        p++;
+    }
+    
+    char hex[20] = "0123456789ABCDEF";
+    
+    char temp[MAXN] = "";
+    int i = 0;
+    //printf("haha\n");
+    while(x){
+        temp[i++] = hex[x % 16];
+        x /= 16;
+    }
+    temp[i] = '\0';
+    //printf("%d %s\n", i, temp);
+    
+    int len = i;
+    
+    for(int iter = 0; iter < len / 2; iter++){
+    	//printf("%d\n", iter);
+        char t = temp[iter];
+        temp[iter] = temp[len - 1 - iter];
+        temp[len - 1 - iter] = t;
+    }
+    //printf("%s\n", temp);
+    
+    for(int iter = 0; iter <= len; iter++){
+        *p++ = temp[iter];
+        //printf("%d", iter);
+    }
+    //printf("%s\n", p);
+}
