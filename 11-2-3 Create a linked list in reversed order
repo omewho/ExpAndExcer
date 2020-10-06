@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct ListNode {
+    int data;
+    struct ListNode *next;
+};
+
+struct ListNode *createlist();
+
+int main()
+{
+    struct ListNode *p, *head = NULL;
+
+    head = createlist();
+    for ( p = head; p != NULL; p = p->next )
+        printf("%d ", p->data);
+    printf("\n");
+
+    return 0;
+}
+
+
+struct ListNode *createlist(){
+	struct ListNode *head, *tail;
+	tail = head = NULL;
+	
+	int num;
+	scanf("%d", &num);
+	
+	while(num != -1){
+		struct ListNode *node = (struct ListNode *)malloc(sizeof(struct ListNode));
+		node->data = num;
+		if(!tail) {
+			node->next = NULL;
+			tail = node;
+		}
+		else {
+			node->next = head;
+		}
+		head = node;
+		
+		
+		scanf("%d", &num);
+	}
+	return head;
+	
+}
