@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct stud_node {
+     int    num;
+     char   name[20];
+     int    score;
+     struct stud_node *next;
+};
+
+struct stud_node *createlist();
+struct stud_node *deletelist( struct stud_node *head, int min_score );
+
+int main()
+{
+    int min_score;
+    struct stud_node *p, *head = NULL;
+
+    head = createlist();
+    scanf("%d", &min_score);
+    head = deletelist(head, min_score);
+    for ( p = head; p != NULL; p = p->next )
+        printf("%d %s %d\n", p->num, p->name, p->score);
+
+    return 0;
+}
+
+
+struct stud_node *createlist(){
+	
+    struct stud_node *head, *tail;
+    head = tail = NULL;
+    do{
+        int n;
+        scanf("%d", &n);
+        if(!n) {
+          break;
+        }
+        else {
+            struct stud_node *node = (struct stud_node *)malloc(sizeof(struct stud_node));
+            node->num = n;
+            scanf("%s %d", node->name, &node->score); //The space is not read into name
+            node->next = NULL;
+            //printf("%d %d %d\n", node->num, strlen(node->name), node->score);
+
+            if(!head) head = node;
+            else tail->next = node;
+
+            tail = node;
+        }
+    }while(1);
+
+    return head;
+
+}
+
+struct stud_node *deletelist( struct stud_node *head, int min_score ){
+    struct stud_node *this_node, *next_node;
+    this_node = head;
+
+    while(this_node && this_node->score < min_score){
+        //printf("this = %d\n", this_node->score);
+        this_node = this_node->next;
+    }
+	
+    head = this_node;
+    //if(!head) printf("Haahah\n");
+    //printf("%d this = %d\n", head->score, this_node->score);
+    if(head){
+        next_node = this_node->next;
+
+        while(next_node) {
+            if(next_node->score < min_score){
+                next_node = next_node->next;
+                this_node->next = next_node;
+            }
+            else {
+                this_node = next_node;
+                next_node= next_node->next;
+            } 
+        }
+    }
+    return head;
+}
