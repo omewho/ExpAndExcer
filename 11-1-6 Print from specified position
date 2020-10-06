@@ -35,6 +35,6 @@ char *match( char *s, char ch1, char ch2 ){
         t++;
     }
     printf("\n");
-    if(!start) return t; // If char1 is not found, then point re
+    if(!start) res = t; // If char1 is not found, then point res to the end of string s, i.e., '\0'.
     return res;
 }
