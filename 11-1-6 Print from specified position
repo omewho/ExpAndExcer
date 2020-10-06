@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+#define MAXS 10
+
+char *match( char *s, char ch1, char ch2 );
+
+int main()
+{
+    char str[MAXS], ch_start, ch_end, *p;
+
+    scanf("%s\n", str);
+    scanf("%c %c", &ch_start, &ch_end);
+    p = match(str, ch_start, ch_end);
+    printf("%s\n", p);
+
+    return 0;
+}
+
+
+char *match( char *s, char ch1, char ch2 ){
+    char *res = s;
+    char *t = s;
+    int start = 0;
+    while(*t){
+        if(!start && *t == ch1){//Char's first time of appearance.
+            res = t;
+            start = 1;
+        }
+        if(start){
+            printf("%c", *t);
+            if(*t == ch2) { 
+                break;
+            }
+        }
+        t++;
+    }
+    printf("\n");
+    if(!start) return t; // If char1 is not found, then point re
+    return res;
+}
