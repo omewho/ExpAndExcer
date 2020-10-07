@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct ListNode {
+    int data;
+    struct ListNode *next;
+};
+
+struct ListNode *createlist(); /*裁判实现，细节不表*/
+struct ListNode *mergelists(struct ListNode *list1, struct ListNode *list2);
+void printlist( struct ListNode *head )
+{
+     struct ListNode *p = head;
+     while (p) {
+           printf("%d ", p->data);
+           p = p->next;
+     }
+     printf("\n");
+}
+
+int main()
+{
+    struct ListNode  *list1, *list2;
+
+    list1 = createlist();
+    list2 = createlist();
+    list1 = mergelists(list1, list2);
+    printlist(list1);
+	
+    return 0;
+}
+
+
+struct ListNode *createlist(){
+    int num;
+    scanf("%d", &num);
+
+    struct ListNode *head = NULL, *tail = NULL, *curr;
+
+    while(num != -1){
+        curr = (struct ListNode *)malloc(sizeof(struct ListNode));
+        curr->next = NULL;
+        curr->data = num;
+
+        if(!head) head = curr;
+        else tail->next = curr;
+
+        tail = curr;
+
+        scanf("%d", &num);
+    }
+
+    return head;
+	
+}
+
+struct ListNode *mergelists(struct ListNode *list1, struct ListNode *list2){
+	
+    struct ListNode *newhead = NULL, *curr1 = list1, *curr2 = list2, *temp = NULL, *tail = NULL;
+
+    int cnt = 0;
+
+    if(curr1){
+        if(!curr2) newhead = curr1;
+        else {
+            while(curr1 && curr2){
+                  temp = (struct ListNode *)malloc(sizeof(struct ListNode));
+
+                  if(curr1->data < curr2->data){
+                      temp->data = curr1->data;
+                      curr1 = curr1->next;
+                  }
+                  else {
+                      temp->data = curr2->data;
+                      curr2 = curr2->next;
+                  }
+                  temp->next = NULL;
+
+                  if(!newhead) newhead = temp;
+                  else tail->next = temp;
+
+                  tail = temp;
+              }
+
+              if(curr1) tail->next = curr1;
+              if(curr2) tail->next = curr2;
+
+          }
+    }
+
+    else newhead = list2;
+
+    return newhead;
+}
