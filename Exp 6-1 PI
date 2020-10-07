@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main(){
+	
+    double eps;
+    scanf("%le", &eps);
+
+    //printf("%.6f\n", eps);
+    double n = 0;
+
+    double item = 1, sum = 0;
+
+    while(item >= eps){
+
+        sum += item;
+        n++;
+        item *= n / (2 * n + 1);
+    }
+    sum += item;
+
+    printf("PI = %.5f\n", sum * 2);
+
+    return 0;
+}
