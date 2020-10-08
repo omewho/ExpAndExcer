@@ -1,0 +1,42 @@
+#include <stdio.h>
+#define MAX 100
+
+int main(){
+    
+	int num, err = 0;
+	
+	char op;
+	
+	scanf("%d", &num);
+	int sum = num;
+	
+	scanf("%c", &op);
+	
+	while(op != '='){
+		if(op != '+' && op != '-' && op != '*' && op != '/'){
+			printf("ERROR\n");
+			err = 1;
+			break;
+		}
+		else{
+			scanf("%d", &num);
+			if(op == '/' ) {
+				if(num == 0){
+					printf("ERROR\n");
+					err = 1;
+					break;
+				}
+				else sum /= num;
+			}
+			else if(op == '+') sum += num;
+			else if(op == '-') sum -= num;
+			else sum *= num;
+		}
+		
+		scanf("%c", &op);
+	}
+	if(!err) printf("%d\n", sum);
+	
+	return 0;
+    
+}
