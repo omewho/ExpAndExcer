@@ -1,0 +1,29 @@
+#include <stdio.h>
+#define MAX 1000
+
+int main(){
+    
+	char str[MAX];
+	
+	scanf("%[^\n]s", str);
+	
+	int i  = 0, ttl = 0, wordstart = 0;
+	
+	while(str[i]){
+		if(!wordstart && str[i] != ' ') {
+			wordstart = !wordstart;
+		}
+		
+		else if(wordstart && str[i] == ' ') {
+			wordstart = !wordstart;
+			ttl++;
+		}
+		i++;
+	}
+	if(wordstart) ttl++;
+	
+	printf("%d\n", ttl);
+	
+	return 0;
+    
+}
