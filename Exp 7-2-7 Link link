@@ -1,0 +1,76 @@
+#include <stdio.h>
+
+void printboard(char *board, int row, int col);
+
+int main(){
+    
+    int n;
+    scanf("%d", &n);
+    getchar();
+    
+    char board[2 * n][2 * n];
+    for(int row = 0; row < 2 * n; row++){
+    	for(int col = 0; col < 2 * n; col++){
+    		scanf("%c", &board[row][col]);
+    		//printf("%c ", board[row][col]);
+    		getchar();
+		}	
+	}
+	
+//	for(int row = 0; row < 2 * n; row++){
+//    	for(int col = 0; col < 2 * n; col++){
+//    		printf("%c ", board[row][col]);
+//		}
+//		printf("\n");	
+//	}
+	
+	int k;
+	scanf("%d", &k);
+	int solution[k][4];
+	for(int row = 0; row < k; row++){
+		for(int col = 0; col < 4; col++){
+			scanf("%d", &solution[row][col]);
+		}
+	}
+	
+	int error = 0, success = 0;
+    
+	for(int row = 0; row < k; row++){
+		int x1 = solution[row][0], y1 = solution[row][1], 
+		x2 = solution[row][2], y2 = solution[row][3];
+		
+		if( board[x1 - 1][y1 - 1] == board[x2 - 1][y2 - 1] && board[x1 - 1][y1 - 1] != '*'){
+			board[x1 - 1][y1 - 1] = '*';
+			board[x2 - 1][y2 - 1] =  '*';
+            success++;
+			printboard((char *)board, 2 * n, 2 * n);  //type cast two dimenssional array board to one dimenssional array.
+		}
+		else {
+			printf("Uh-oh\n");
+			error++;
+		}	
+		
+		if(error == 3) {
+			printf("Game Over\n");
+			break;
+		}
+        if(success == 2 * n * n - 1){
+            printf("Congratulations!\n");
+            break;
+        }
+	}
+
+    return 0;
+}
+
+void printboard(char *board, int row, int col){
+	
+	for(int i = 0; i < row; i++){
+		for(int j = 0; j < col; j++){
+			if(j != 0) printf(" ");
+			printf("%c", board[i * row + j]);
+		}
+		printf("\n");
+	}
+	
+}
