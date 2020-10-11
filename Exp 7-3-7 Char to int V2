@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(){
+    
+    char str[81];
+    scanf("%[^\n]s", str);
+    
+    int i = 0, sum = 0;
+    while(str[i]){
+        
+        if(str[i] >= '0' && str[i] <= '9'){
+            sum = sum * 10 + str[i] - '0';
+        }
+        
+        i++;
+    }
+    
+    printf("%d\n", sum);
+    
+    return 0;
+}
