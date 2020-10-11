@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+void findsack(int *arr, int row, int col);
+
+void printarr(int *arr, int row, int col){
+	
+	for(int i = 0; i < row; i++){
+		for(int j = 0; j < col; j++){
+			if(j != 0) printf(" ");
+			printf("%d", arr[i * col + j]);
+		}
+		printf("\n");
+	}
+}
+
+int findrowmax(int *arr, int row, int col){
+	int max = arr[row * col]; // first element of the row
+	
+	for(int j = 0; j < col; j++){
+		if(arr[row * col + j] > max) max = arr[row * col + j];
+	}
+	
+	return max;
+}
+
+int findcolmin(int *arr, int row, int col){
+	int min = arr[col]; // first element of the row
+	
+	for(int j = 0; j < row; j++){
+		if(arr[col + row * j] < min) min = arr[col + row * j] ;
+	}
+	
+	return min;
+}
+
+int main(){
+    
+    int n;
+    scanf("%d", &n);
+    
+    int arr[n][n];
+    for(int row = 0; row < n; row++){
+    	for(int col = 0; col < n; col++){
+    		scanf("%d", &arr[row][col]);
+		}
+	}
+//	printarr((int *)arr, n, n);
+	
+	findsack((int *)arr, n, n);
+    return 0;
+}
+
+void findsack(int *arr, int row, int col){
+	
+	int ttl = 0;
+	for(int i = 0; i < row; i++){
+		
+		for(int j = 0; j < col; j++){
+			//printf("%d ", arr[i * col + j]);
+			if(arr[i * col + j] == findrowmax(arr, i, col) && arr[i * col + j] == findcolmin(arr, row, j)) {
+				printf("%d %d\n", i, j);
+				ttl++;
+			}	
+		}
+	}
+	if(!ttl) printf("NONE\n");
+	
+}
