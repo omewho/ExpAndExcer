@@ -19,6 +19,10 @@ int main(){
 			
 			s = (i + 1 - k) * s / k;
 			printf("%6d", s);
+			
+			/*
+			printf("%6d", s = (i + 1 - k) * s / k);
+			*/
 		}
 		if(!i) printf("\n");
 		if(i) printf("%6d\n", 1);
