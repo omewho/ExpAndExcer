@@ -1,0 +1,68 @@
+#include <stdio.h>
+#define MAX 100
+
+void ReadString( char s[] ){
+	
+	int i = 0;
+	
+	while((s[i] = getchar()) != '#' && i < MAX) i++;
+	s[i] = '\0';
+}
+
+int isHex(char ch) {
+	if( (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F') ) return 1;
+	return 0;
+}
+
+int hextodec(char ch) {
+	int res;
+	if( ch >= 'a' && ch <= 'f') res = 10 + ch - 'a';
+	else if( ch >= 'A' && ch <= 'F') res = 10 + ch - 'A';
+	else if( ch >= '0' && ch <= '9') res = ch - '0';
+    return res;
+}
+
+int exchange(char s[]){
+	
+	int i = 0;
+	int num = 0;
+	int negative = 0, start = 0;
+	char res[MAX];
+	int j = 0;
+	
+	while(s[i]){
+		
+		if((!negative)  && (!start)  && s[i] == '-'){
+			negative = 1;
+			res[j++] = '-'; 
+			//printf("Hello\n");
+		} 
+		 
+		
+		if(isHex(s[i])){
+			if(!start) start = 1;
+			num = num * 16 + hextodec(s[i]);
+			res[j++] = s[i];		
+		}
+	
+		i++;
+	}
+	res[j] = '\0';
+	if(negative) num = -num;
+	printf("%d\n", num);
+	
+	//printf("%s\n", res);
+}
+
+int main() {
+    
+    char str[MAX];
+    
+    ReadString(str);
+    //printf("%s\n", str);
+    
+    exchange(str);
+    
+    
+    return 0;
+}
