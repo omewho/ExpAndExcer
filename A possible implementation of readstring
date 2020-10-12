@@ -19,7 +19,8 @@ void ReadString( char s[] ){
 	int i = 0;
 	
 	while((s[i] = getchar()) != EOF && i < MAXS) i++;
-	s[i] = '\0';
+	if(i < MAXS) s[i - 1] = '\0';
+	else s[i] = '\0';
 }
 
 void StringCount( char s[] ){
