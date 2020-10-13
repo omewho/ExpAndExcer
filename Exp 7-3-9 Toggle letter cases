@@ -1,0 +1,34 @@
+#include <stdio.h>
+#define MAX 80
+
+void readString(char str[]){
+    
+    int i = 0;
+    while((str[i] = getchar()) != '#') i++;
+    str[i] = '\0';
+}
+
+void toggle(char str[]){
+    
+    int i = 0;
+    while(str[i]){
+        if(str[i] >= 'A' && str[i] <= 'Z') str[i] += 'a' - 'A';
+        else if(str[i] >= 'a' && str[i] <= 'z') str[i] += 'A' - 'a';
+        
+        i++;
+    }
+}
+
+void printString(char str[]){
+    printf("%s\n", str);
+}
+
+int main(){
+    
+    char str[MAX];
+    readString(str);
+    toggle(str);
+    
+    printString(str);
+    return 0;
+}
