@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 80
+
+void readstring(char s[]){
+    
+    int i = 0;
+    while((s[i] = getchar()) != '\n') i++;
+    s[i] = '\0';
+}
+
+void printstring(char s[]){
+    printf("%s\n", s);
+}
+
+int cmp(const void*a, const void *b){
+	return *((char *)a) - *((char *)b);
+}
+
+void deleteDup(char s[]){
+	
+	//printf("%d\n", strlen(s));
+	
+	char temp[MAX];
+	memset(temp, '\0', sizeof(temp));
+	
+	int i, j = 0, k;
+	for(i = 0; i < strlen(s); i++){
+		if(!strchr(temp, s[i])) temp[j++] = s[i];
+	}
+	
+	qsort(temp, strlen(temp), sizeof(char), cmp);
+	
+	memset(s, '\0', strlen(s));
+	
+	strncpy(s, temp, strlen(temp));
+	
+}
+
+int main(){
+    
+    char str[MAX];
+    
+    readstring(str);
+    //printstring(str);
+    
+    deleteDup(str);
+    printstring(str);
+    
+    return 0;
+}
