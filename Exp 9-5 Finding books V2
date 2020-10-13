@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXLEN 30
+
+typedef struct book{
+	char name[MAXLEN];
+	double price;
+} Book;
+
+void readString(char s[]){
+	
+	int i = 0; 
+	while((s[i] = getchar()) != '\n') i++;
+	s[i] = '\0';
+}
+
+void enterBookInfo(Book bk[], int n){
+	
+	for(int i = 0; i < n; i++){
+		readString(bk[i].name);
+		scanf("%lf", &bk[i].price);
+    	getchar();
+	}
+}
+
+void printBook(Book bk){
+	printf("%.2f, %s\n", bk.price, bk.name);
+}
+
+int cmp(const void* a, const void *b){
+	return ((Book *)a)->price - ((Book *)b)->price;
+	
+	//return (*(Book *)a).price - (*(Book *)b).price;
+}
+
+int main() {
+    
+    int n;
+    scanf("%d", &n);
+    getchar();
+    
+    Book bk[n];
+    enterBookInfo(bk, n);
+	
+//	for(int iter = 0; iter < n; iter++){
+//    	printBook(bk[iter]);
+//	}
+    
+    qsort(bk, n, sizeof(Book), cmp);
+    
+//    for(int iter = 0; iter < n; iter++){
+//    	printBook(bk[iter]);
+//	}
+    printBook(bk[n - 1]);
+    printBook(bk[0]);
+    
+    return 0;
+}
