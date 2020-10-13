@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 80
+
+void readstring(char s[]){
+    
+    int i = 0;
+    while((s[i] = getchar()) != '\n') i++;
+    s[i] = '\0';
+}
+
+void printstring(char s[]){
+    printf("%s\n", s);
+}
+
+int findChar(char s[], int endpos, char ch){
+	int i = 0, found = 0;
+	while(s[i] and i <= endpos) {
+		
+		if( s[i] == ch) {
+			found = 1;
+			break;
+		}
+		i++;
+	}
+	return found;
+}
+
+void sortString(char s[]){
+	
+	int len = strlen(s);
+	for(int i = 0; i < len - 1; i++){
+		int flipped = 0;
+		for(int j = 0; j < len -1 - i; j++) {
+			if(s[j] > s[j + 1]){
+				char temp = s[j];
+				s[j] = s[j + 1];
+				s[j + 1] = temp;
+				if(!flipped) flipped = 1;
+			}
+		}
+		if(!flipped) break; // If no flipping happened, sorting is completed
+	}
+}
+
+void deleteDup(char s[]){
+	
+	//printf("%d\n", strlen(s));
+	
+	char temp[MAX];
+	memset(temp, '\0', sizeof(temp));
+	
+	int i, j = 0;
+	for(i = 0; i < strlen(s); i++){
+		if(!findChar(s, i - 1, s[i])) temp[j++] = s[i];
+	}
+	//temp[j] = '\0';
+	
+	//printstring(temp);
+	
+	i = 0, j = 0;
+	while(s[i++] = temp[j++]);
+	s[i] = '\0';
+	
+	sortString(s);
+	
+	//printstring(s);
+	
+}
+
+int main(){
+    
+    char str[MAX];
+    
+    readstring(str);
+	//printstring(str);
+    
+    deleteDup(str);
+    printstring(str);
+    
+    return 0;
+}
