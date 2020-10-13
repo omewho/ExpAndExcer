@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 80
+
+void readString(char s[]){
+    int i = 0;
+    while((s[i] = getchar()) != '\n') i++;
+    s[i] = '\0';
+}
+
+void printString(char s[]){
+    printf("%s\n", s);
+}
+
+int len(char s[]) {
+    
+    int i = 0;
+    while(s[i++]);
+    return i;
+}
+
+int main(){
+    
+    int num;
+    scanf("%d", &num);
+    getchar();
+    
+    char str[num][MAX];
+    for(int i = 0; i < num; i++){
+        readString(str[i]);
+    }
+    
+    char *p = str[0];
+    for(int i = 1; i < num; i++){
+        if(strcmp(p, str[i]) > 0) p = str[i];
+    }
+    printf("Min is: ");
+    printString(p);
+    
+    return 0;
+}
