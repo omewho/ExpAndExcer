@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define NUM 4
+#define MAX 20
+
+void enterPeom(char *peom[]){
+    
+    char temp[MAX];
+    
+    for(int i = 0; i < NUM; i++){
+        scanf("%s", temp);
+        peom[i] = (char *)malloc(strlen(temp) * sizeof(char));
+        strcpy(peom[i], temp);
+    }    
+}
+
+void printPeom(char *peom[]){
+	
+	for(int i = 0; i < NUM; i++){
+        printf("%s\n", peom[i]);
+    }
+}
+
+char *extractTail(char *peom[]){
+	char *p = (char *)malloc(9 * sizeof(char));
+	int i;
+	for(i = 0; i < NUM; i++){
+		int len = strlen(peom[i]);
+		p[2 * i] = peom[i][len - 2];
+		p[2 * i + 1] = peom[i][len - 1];
+	}
+	p[2 * i] = '\0';
+	return p;
+}
+
+int main(){
+    
+    char *peom[NUM], *p = NULL;
+    enterPeom(peom);
+    //printPeom(peom);
+    
+    printf("%s\n", extractTail(peom));
+    
+    return 0;
+}
