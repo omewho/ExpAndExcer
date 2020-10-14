@@ -13,6 +13,18 @@ void readStrings(char str[]){
 	
 }
 
+void enterWords(char words[][MAXLEN], int max, int *len){
+	int i = 0;
+	
+	while(i < max) {
+		readStrings(words[i]);
+		if(words[i][0] == '#') break;
+		i++;
+	}		
+	
+	*len = i;
+}
+
 void printString(char s[]) {
 	printf("%s", s);
 }
@@ -41,17 +53,17 @@ void sortWords(char words[][MAXLEN], int num){
 	char key[MAXLEN];
 	for(i = 1; i < num; i++){
 		str_cpy(key, words[i], MAXLEN);
-		printf("i is %d, key is %s.\n", i, key);
+		//printf("i is %d, key is %s.\n", i, key);
 		
-		for(j = i - 1; j >= 0 && strlen(words[j]) > strlen(words[j + 1]); j--){
+		for(j = i - 1; j >= 0 && strlen(words[j]) > strlen(key); j--){
 			str_cpy(words[j + 1], words[j], MAXLEN);
-			printf("words[%d] is updated to %s\n", j + 1, words[j + 1]);
+			//printf("words[%d] is updated to %s\n", j + 1, words[j + 1]);
 		}
 		j++;
 		if(j != i) {
 			
 			str_cpy(words[j], key, MAXLEN);
-			printf("words[%d] is updated to %s\n", j, words[j]);
+			//printf("words[%d] is updated to %s\n", j, words[j]);
 		} 
 		
 	}
@@ -62,14 +74,11 @@ int main(){
 	
 	char str[MAXNUM][MAXLEN];
 
-	memset((char *)str, '\0', MAXNUM * MAXLEN);
+	//memset((char *)str, '\0', MAXNUM * MAXLEN);
 	
-	int i = 0;
-	while(1){
-		readStrings(str[i]);
-		if(str[i][0] == '#') break;
-		i++;
-	}
+	int i;
+	
+	enterWords(str, MAXNUM, &i);
 	
 	int num = i;
 	
