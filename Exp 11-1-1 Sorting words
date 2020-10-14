@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXNUM 20
+#define MAXLEN 10
+
+void readStrings(char str[]){
+	
+	int i = 0;
+	while((str[i] = getchar()) != '\n') i++;
+	str[i] = '\0';
+	
+}
+
+void printString(char s[]) {
+	printf("%s", s);
+}
+
+void str_cpy(char dest[], char src[], int max){
+	
+	int i = 0, j = 0;
+	
+	while(i < max - 1 && src[i]){
+		dest[i] = src[i];
+		i++;
+	}
+	//printf("%d\n", i);
+	dest[i] = '\0';
+}
+
+int main(){
+	
+	char str[MAXNUM][MAXLEN];
+//	printf("%p\n", str[0]);  
+//	printf("%p\n", str + 1); //str stands for char**, +1 will increase the pointer by column size = MAXLEN;
+//	printf("%p\n", str[1]);
+//	
+//	
+//	printf("%p\n", str[1] + 1); //str[1] stands for char *, +1 will do a increment of 1;
+//	
+//	printf("%p\n", str[2]);
+//	printf("str + %d*MAXLEN is %p\n", 2, str + 2 * MAXLEN);
+//	printf("%d\n", sizeof(str[1]));
+	memset((char *)str, '\0', MAXNUM * MAXLEN);
+	
+	int i = 0;
+	while(1){
+		readStrings(str[i]);
+		if(str[i][0] == '#') break;
+		i++;
+	}
+	
+	int num = i;
+	
+	//for(int index = 0; index < num; index++){
+		//printf("%d\n", sizeof(str[0]));
+		//printString((char *)str + index * sizeof(str[0]));
+		//printf("%d\n", sizeof(str));
+		//printf("%p %d\n", (char *)str + index * sizeof(str[0]), index );
+//	}
+	
+//	for(int row = 0; row < num; row++){
+//		for(int col = 0; col < MAXLEN; col++) {
+//			if(col != 0) printf(" ");
+//			if(str[row][col])printf("%c", str[row][col]);
+//			else printf("+");
+//			if(col == MAXLEN - 1) printf("\n");
+//		}
+//	}
+	
+	//printf("---------\n");
+//	printf("%p\n", str[0]);
+//	printf("%p\n", str[1]);	
+	
+	for(int index = 1;index < num; index++){
+		
+		char key[MAXLEN];
+//		printf("\n%s %p\n", &str[index][0], &str[index][0]);
+//		printf("\nindex is %d: ", index);
+//		printString(str[index]);
+		str_cpy(key, str[index], MAXLEN);
+		
+		//printf("index is %d, key is %s.\n", index, key);
+		int iter = index - 1;
+		
+		while(iter >= 0 && (strlen(str[iter]) > strlen(key)) ){ 
+		// Look out! Key can not be substitued by str[index] because str[index] could be updated.
+			//printf("iter is %d, str[%d] is %s\n", iter, iter, str[iter]);
+			str_cpy(str[iter + 1], str[iter], MAXLEN);
+			//printf("str[%d] is updated to %s\n", iter + 1, str[iter + 1]);
+			iter--;	
+		}
+		iter++;
+		
+		//printf("iter is now %d\n", iter);
+		str_cpy(str[iter], key, MAXLEN);
+		//printf("\n\n");
+		//for(int i = 0; i <= index; i++) {
+			//printf("i is %d, ", i);
+			//printString(str[i]);
+			//printf("\n");
+		//}
+		
+	}
+	
+	//printf("\n");
+	for(int index = 0; index < num; index++){
+		//printf("str[%d]: ", index);
+		printString(str[index]);
+		printf(" ");
+	}
+				
+}
