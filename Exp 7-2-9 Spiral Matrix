@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+void printMatrix(int *matrix, int n) {
+	
+	for(int row = 0; row < n; row++){
+		for(int col = 0; col < n; col++){
+			
+			//if(col != 0)printf(" ");
+			printf("%3d", matrix[row * n + col]);
+			if(col == n - 1) printf("\n");
+		}
+	}
+}
+
+void initMatrix(int *matrix, int n) {
+	
+	for(int row = 0; row < n; row++){
+		for(int col = 0; col < n; col++){
+			
+			matrix[row * n + col] = 0;
+		}
+	}
+}
+
+int main() {
+    
+    int n;
+    scanf("%d", &n);
+    
+    int spiralMatrix[n][n];
+    
+    initMatrix((int *)spiralMatrix, n);
+    
+    //printMatrix((int *)spiralMatrix, n);
+    
+    int i = 1, row = 0, col = 0;
+    while(i <= n * n){
+    	int rowpos, colpos;
+    	
+    	// Filling cells to the left
+        for(rowpos = row, colpos = col;(!spiralMatrix[rowpos][colpos]) && (colpos < n);colpos++) {
+        	//printf("forward: %d %d\n", rowpos, colpos);
+        	spiralMatrix[rowpos][colpos] = i;
+        	i++;
+		}
+		row++;
+		col = colpos - 1;
+		
+		//To the bottom
+		for(rowpos = row, colpos = col;!spiralMatrix[rowpos][colpos] && (rowpos < n);rowpos++) {
+			//printf("down: row = %d col = %d\n", rowpos, colpos);
+        	spiralMatrix[rowpos][colpos] = i;
+        	i++;
+		}
+		row = rowpos - 1;
+		col--;
+        
+        for(rowpos = row, colpos = col;!spiralMatrix[rowpos][colpos] && (colpos >= 0);colpos--) {
+        	//printf("back: row = %d col = %d\n", rowpos, colpos);
+        	spiralMatrix[rowpos][colpos] = i;
+        	i++;
+		}
+		row--;
+		col = colpos + 1;
+		//printf("row = %d, col = %d\n", row, col);
+		
+		for(rowpos = row, colpos = col;!spiralMatrix[rowpos][colpos] && (rowpos >= 0);rowpos--) {
+        	//printf("up: row = %d col = %d\n", rowpos, colpos);
+        	spiralMatrix[rowpos][colpos] = i;
+        	i++;
+		}
+		row = rowpos + 1;
+		col++;
+        
+    }
+    printMatrix((int *)spiralMatrix, n);
+    
+    return 0;
+}
