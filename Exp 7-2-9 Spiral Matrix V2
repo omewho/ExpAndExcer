@@ -1,0 +1,103 @@
+#include <stdio.h>
+
+void printMatrix(int *matrix, int n) {
+	
+	for(int row = 0; row < n; row++){
+		for(int col = 0; col < n; col++){
+			
+			//if(col != 0)printf(" ");
+			printf("%3d", matrix[row * n + col]);
+			if(col == n - 1) printf("\n");
+		}
+	}
+}
+
+void initMatrix(int *matrix, int n) {
+	
+	for(int row = 0; row < n; row++){
+		for(int col = 0; col < n; col++){
+			
+			matrix[row * n + col] = 0;
+		}
+	}
+}
+
+void forward(int *matrix, int *row, int *col, int *num, int n) {
+	int rowpos, colpos, i = *num;
+	for(rowpos = *row, colpos = *col; (!matrix[rowpos * n +  colpos]) && (colpos < n); colpos++) {
+        //printf("forward: %d %d\n", rowpos, colpos);
+       	matrix[rowpos * n + colpos] = i;
+       	i++;
+	}
+	*row = *row + 1;
+	*col = colpos - 1;
+	*num = i;
+}
+
+void down(int *matrix, int *row, int *col, int *num, int n) {
+	int rowpos, colpos, i = *num;
+	for(rowpos = *row, colpos = *col; (!matrix[rowpos * n +  colpos]) && (rowpos < n); rowpos++) {
+        printf("down: %d %d\n", rowpos, colpos);
+       	matrix[rowpos * n + colpos] = i++;
+	}
+	*row = rowpos - 1;
+	*col = *col - 1;
+	*num = i;
+}
+
+void backward(int *matrix, int *row, int *col, int *num, int n) {
+	int rowpos, colpos, i = *num;
+	for(rowpos = *row, colpos = *col; (!matrix[rowpos * n +  colpos]) && (colpos >= 0); colpos--) {
+        printf("down: %d %d\n", rowpos, colpos);
+       	matrix[rowpos * n + colpos] = i++;
+	}
+	*row = *row - 1;
+	*col = colpos + 1;
+	*num = i;
+}
+
+void up(int *matrix, int *row, int *col, int *num, int n) {
+	int rowpos, colpos, i = *num;
+	for(rowpos = *row, colpos = *col; (!matrix[rowpos * n +  colpos]) && (rowpos >= 0); rowpos--) {
+        printf("down: %d %d\n", rowpos, colpos);
+       	matrix[rowpos * n + colpos] = i++;
+	}
+	*row = rowpos + 1;
+	*col = *col + 1;
+	*num = i;
+}
+
+void walk(int *matrix, int *row, int *col, int *num, int n){
+	forward(matrix, row, col, num, n);
+	down(matrix, row, col, num, n);
+	backward(matrix, row, col, num, n);
+	up(matrix, row, col, num, n);
+}
+
+int main() {
+    
+    int n;
+    scanf("%d", &n);
+    
+    int spiralMatrix[n][n];
+    
+    initMatrix((int *)spiralMatrix, n);
+    
+    //printMatrix((int *)spiralMatrix, n);
+    
+    int i = 1, row = 0, col = 0;
+    while(i <= n * n){
+		
+//		forward((int *)spiralMatrix, &row, &col, &i, n);
+//		
+//		down((int *)spiralMatrix, &row, &col, &i, n);
+//        
+//		backward((int *)spiralMatrix, &row, &col, &i, n);
+//		
+//		up((int *)spiralMatrix, &row, &col, &i, n);
+        walk((int *)spiralMatrix, &row, &col, &i, n);
+    }
+    printMatrix((int *)spiralMatrix, n);
+    
+    return 0;
+}
